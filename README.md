@@ -29,7 +29,7 @@ SUBCOMMANDS:
 
 - Timer
 - Session Labels (Categories)
-- History (saved to ./.pom.json)
+- History (saved to ./.session.json)
 - Log
 - Desktop Notifications
 
