@@ -29,7 +29,7 @@ SUBCOMMANDS:
 
 - Timer
 - Session Labels (Categories)
-- History (saved to ./.session.json)
+- History (saved to ./.oryx)
 - Log
 - Desktop Notifications
 

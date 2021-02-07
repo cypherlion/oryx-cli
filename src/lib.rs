@@ -58,7 +58,7 @@ pub fn timer(title: &str, labels: &str) -> std::io::Result<()> {
     // generate latest session
     let session = generate_session(title, labels)?;
 
-    // Initialize history ( the `.session.json` file)
+    // Initialize history ( the `.oryx` file)
     init_history()?;
 
     // read history
@@ -106,16 +106,16 @@ fn generate_session(title: &str, labels: &str) -> std::io::Result<Session> {
     })
 }
 
-/// Initialze Session history file (./session.json)
+/// Initialze Session history file (./.oryx)
 fn init_history() -> std::io::Result<()> {
-    File::open("./.session.json").unwrap_or_else(|error| {
+    File::open("./.oryx").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
-            let file = File::create("./.session.json").unwrap_or_else(|error| {
+            let file = File::create("./.oryx").unwrap_or_else(|error| {
                 panic!("Problem creating the file: {:?}", error);
             });
 
             let initial_json = "[]";
-            let f = File::create("./.session.json").expect("Unable to create file");
+            let f = File::create("./.oryx").expect("Unable to create file");
             let mut f = BufWriter::new(f);
             f.write_all(initial_json.as_bytes())
                 .expect("Unable to write data");
@@ -129,10 +129,10 @@ fn init_history() -> std::io::Result<()> {
     Ok(())
 }
 
-/// Read Session history from JSON file (./session.json)
+/// Read Session history from JSON file (./.oryx)
 fn read_history() -> std::io::Result<Vec<Session>> {
     let mut data = String::new();
-    let f = File::open("./.session.json").expect("Unable to open file");
+    let f = File::open("./.oryx").expect("Unable to open file");
     let mut br = BufReader::new(f);
     br.read_to_string(&mut data).expect("Unable to read string");
 
@@ -141,10 +141,10 @@ fn read_history() -> std::io::Result<Vec<Session>> {
     Ok(v)
 }
 
-/// Write Session history To JSON file (./session.json)
+/// Write Session history To JSON file (./oryx)
 fn write_history(history: &[Session]) -> std::io::Result<()> {
     let output = serde_json::to_string(&history).unwrap();
-    let f = File::create("./.session.json").expect("Unable to create file");
+    let f = File::create("./.oryx").expect("Unable to create file");
     let mut f = BufWriter::new(f);
     f.write_all(output.as_bytes())
         .expect("Unable to write data");
